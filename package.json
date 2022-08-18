@@ -1,0 +1,52 @@
+{
+  "name": "ethereum.d-game.workshops.utkusarioglu.com",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "types": "artifacts/typechain",
+  "scripts": {
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-etherscan": "^3.0.4",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/hardhat-upgrades": "^1.18.0",
+    "@typechain/ethers-v5": "10.0.0",
+    "@typechain/hardhat": "^6.0.0",
+    "@types/chai": "^4.3.1",
+    "@types/config": "^0.0.41",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^17.0.38",
+    "brands-and-flavors": "^1.0.1",
+    "chai": "^4.3.6",
+    "config": "^3.3.7",
+    "dotenv": "^16.0.1",
+    "env-accounts": "^1.0.9",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.8",
+    "hardhat": "^2.9.7",
+    "hardhat-deploy": "^0.11.10",
+    "hardhat-gas-reporter": "^1.0.4",
+    "hardhat-log-remover": "^2.0.2",
+    "hardhat-spdx-license-identifier": "^2.0.3",
+    "hardhat-storage-layout": "^0.1.6",
+    "hardhat-tracer": "^1.1.0-rc.6",
+    "js-yaml": "^4.1.0",
+    "mocha": "^10.0.0",
+    "prettier": "^2.6.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.18",
+    "solidity-coverage": "^0.7.21",
+    "ts-node": "^10.8.0",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.0.0",
+    "typechain": "^8.0.0",
+    "typescript": "^4.7.2"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.4.1",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@uniswap/v3-periphery": "^1.4.1"
+  }
+}

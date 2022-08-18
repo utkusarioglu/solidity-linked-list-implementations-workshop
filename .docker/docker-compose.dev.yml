@@ -1,0 +1,7 @@
+version: "3.9"
+
+services:
+  hardhat-repo-template:
+    image: utkusarioglu/ethereum-devcontainer:1.0.1
+    volumes:
+      - ..:/utkusarioglu/templates/hardhat-repo-template

@@ -1,0 +1,12 @@
+{
+  "solidity.compileUsingRemoteVersion": "v0.8.7+commit.e28d00a7",
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": ".env*",
+        "isAsync": true,
+        "cmd": "/scripts/create-env-example.sh"
+      },
+    ]
+  }
+}

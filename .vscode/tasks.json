@@ -1,0 +1,98 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "test",
+      "group": "test",
+      "problemMatcher": [],
+      "label": "yarn test all files",
+      "detail": "Run tests on hardhat network",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": "yarn hardhat test ${relativeFile}",
+      "group": "test",
+      "problemMatcher": [],
+      "label": "yarn test $CURRENT_FILE",
+      "detail": "Test current file using hardhat",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": "yarn hardhat typechain",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "Build types",
+      "detail": "Use typechain to build contract types",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false,
+        "clear": true
+      }
+    },
+    {
+      "type": "shell",
+      "command": "scripts/echidna-analyze.sh",
+      "problemMatcher": [],
+      "label": "Analyze with Echidna",
+      "detail": "Fuzz the contracts using Echidna",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": "scripts/manticore-analyze.sh",
+      "problemMatcher": [],
+      "label": "Analyze with Manticore",
+      "detail": "Run symbolic analysis with Manticore",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+    {
+      "type": "shell",
+      "command": "scripts/mythril-analyze.sh",
+      "problemMatcher": [],
+      "label": "Analyze with Mythril",
+      "detail": "Run security analysis with Mythril",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      }
+    },
+  ]
+}

@@ -1,0 +1,7 @@
+cryticArgs:
+  - "--config-file=crytic.config.json"
+coverage: true
+estimateGas: true
+multi-abi: true
+corpusDir: ./artifacts/corpus
+format: text

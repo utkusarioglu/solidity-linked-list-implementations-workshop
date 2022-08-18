@@ -1,0 +1,24 @@
+accounts:
+  local:
+    deployer:
+      privateKey: LOCAL_DEPLOYER_PK
+    user1:
+      privateKey: LOCAL_USER_1_PK
+    user2:
+      privateKey: LOCAL_USER_2_PK
+    user3:
+      privateKey: LOCAL_USER_3_PK
+
+  goerli:
+    deployer:
+      privateKey: GOERLI_DEPLOYER_PK
+
+apiKeys:
+  coinMarketCap: COINMARKETCAP_API_KEY
+  infura: INFURA_API_KEY
+  etherscan: ETHERSCAN_API_KEY
+  alchemy:
+    ethereum:
+      kovan: ALCHEMY_ETHEREUM_KOVAN_API_KEY
+    polygon:
+      mumbai: ALCHEMY_POLYGON_MUMBAI_API_KEY

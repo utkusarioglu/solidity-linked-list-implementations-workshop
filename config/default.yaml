@@ -1,0 +1,36 @@
+features:
+  gasReporter:
+    enabled: false
+    token: eth
+  multiUserTesting: false
+
+accounts:
+  goerli:
+    deployer:
+      address: "0xaAA2b2b9bbB594409842Ddf15b9bD0bb6BE262d9"
+      balance: "1000000000000000000000"
+  local:
+    deployer:
+      address: "0x7a21917792d1be1986a5e1998bd248A259987f89"
+      balance: "10000000000000000000"
+    user1:
+      address: "0x87453d4882f3f84912cf4FfF851674C517135fD1"
+      balance: "10000000000000000000"
+    user2:
+      address: "0xd9FF26d1b97d3f2e942D026645332336cBb27bda"
+      balance: "10000000000000000000"
+    user3:
+      address: "0xcE9a2A71dC12F79DF3B30EA1e6355C576E4f632f"
+      balance: "10000000000000000000"
+
+externalContracts:
+  kovan:
+    dai: "0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa"
+    weth: "0xd0A1E359811322d97991E03f863a0C30C2cF029C"
+    uniswapV3Quoter: "0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6"
+    uniswapV3Router: "0xE592427A0AEce92De3Edee1F18E0157C05861564"
+    chainlink: "0x9326BFA02ADD2366b30bacB125260Af641031331"
+
+geth:
+  instance1: "http://192.168.1.151:8545"
+  instance2: "http://192.168.1.151:9545"
