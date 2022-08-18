@@ -1,11 +1,11 @@
 {
-  "name": "hardhat-repo-template.templates.utkusarioglu.com",
+  "name": "solidity-linked-list-implementations.workshops.utkusarioglu.com",
   "dockerComposeFile": [
     "../.docker/docker-compose.dev.yml",
     "docker-compose.yml"
   ],
-  "service": "hardhat-repo-template",
-  "workspaceFolder": "/utkusarioglu/templates/hardhat-repo-template",
+  "service": "solidity-linked-list-implementations",
+  "workspaceFolder": "/utkusarioglu/workshops/solidity-linked-list-implementations",
   "settings": {
     "workbench.colorCustomizations": {
       "activityBar.background": "#ddb01b",

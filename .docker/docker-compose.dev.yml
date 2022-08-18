@@ -1,7 +1,7 @@
 version: "3.9"
 
 services:
-  hardhat-repo-template:
+  solidity-linked-list-implementations:
     image: utkusarioglu/ethereum-devcontainer:1.0.1
     volumes:
-      - ..:/utkusarioglu/templates/hardhat-repo-template
+      - ..:/utkusarioglu/workshops/solidity-linked-list-implementations
