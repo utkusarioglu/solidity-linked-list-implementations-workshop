@@ -41,9 +41,6 @@ jobs:
       - name: Compile contracts
         shell: bash
         run: yarn hardhat compile
-      - name: Run unit tests
-        shell: bash
-        run: yarn test
         # This step needs to be included because without the types
         # being available beforehand, the test step returns a type error
       - name: Create types
