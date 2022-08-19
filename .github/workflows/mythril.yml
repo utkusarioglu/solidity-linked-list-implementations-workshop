@@ -13,7 +13,7 @@ jobs:
     name: Run Mythril analysis
     runs-on: ubuntu-latest
     container:
-      image: utkusarioglu/ethereum-dev-environment:latest
+      image: utkusarioglu/ethereum-devcontainer:latest
       env:
         COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
         INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
