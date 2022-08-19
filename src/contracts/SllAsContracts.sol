@@ -6,6 +6,10 @@ error EmptyList();
 error ExistingList();
 error Overflow(uint256 index);
 
+/// @title Single Linked List with each node as contracts
+/// @author Utku Sarioglu
+/// @notice Holds record of the head node, facilitates navigation along the list
+/// @dev There is still quite a bit of functionality that could be implemented in this contract
 contract SllAsContracts {
   SllNode private head;
 
