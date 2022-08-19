@@ -34,18 +34,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 2
+          fetch-depth: 1
       - name: Install dependencies
         shell: bash
         run: yarn --frozen-lockfile --no-progress --production false
       - name: Compile contracts
         shell: bash
         run: yarn hardhat compile
-        # This step needs to be included because without the types
-        # being available beforehand, the test step returns a type error
-      - name: Create types
+      - name: ls everything
         shell: bash
-        run: yarn hardhat typechain
+        run: ls artifacts
       - name: Run unit tests
         shell: bash
         run: yarn test
