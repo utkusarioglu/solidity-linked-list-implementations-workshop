@@ -48,3 +48,7 @@ jobs:
         # being available beforehand, the test step returns a type error
       - name: Create types
         shell: bash
+        run: yarn hardhat typechain
+      - name: Run unit tests
+        shell: bash
+        run: yarn test
