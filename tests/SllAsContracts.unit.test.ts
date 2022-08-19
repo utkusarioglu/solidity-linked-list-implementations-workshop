@@ -34,7 +34,7 @@ describe(CONTRACT_NAME, () => {
           const head = await instance.getHead();
           const one = new ethers.Contract(head, abi, signer) as SllNode;
           const data = await one.getData();
-          const expected = ethers.utils.formatBytes32String("0");
+          const expected = ethers.BigNumber.from(0);
           expect(data).to.equal(expected);
         });
       });
