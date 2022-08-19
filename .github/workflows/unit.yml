@@ -27,17 +27,17 @@ jobs:
         LOCAL_USER_1_PK: ${{ secrets.LOCAL_USER_1_PK }}
         LOCAL_USER_2_PK: ${{ secrets.LOCAL_USER_2_PK }}
         LOCAL_USER_3_PK: ${{ secrets.LOCAL_USER_3_PK }}
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-          with:
-            fetch-depth: 2
-      - name: Install dependencies
-        shell: bash
-        run: yarn --frozen-lockfile --no-progress --production false
-      - name: Compile contracts
-        shell: bash
-        run: yarn hardhat compile
-      - name: Run unit tests
-        shell: bash
-        run: yarn test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+    - name: Install dependencies
+      shell: bash
+      run: yarn --frozen-lockfile --no-progress --production false
+    - name: Compile contracts
+      shell: bash
+      run: yarn hardhat compile
+    - name: Run unit tests
+      shell: bash
+      run: yarn test
