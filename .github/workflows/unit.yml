@@ -7,7 +7,7 @@ on:
     paths:
       - .github/workflows/unit.yml
       - src/contracts/**
-      - tests/**/*.test.ts
+      - tests/**/*.unit.test.ts
   workflow_dispatch:
 
 jobs:
