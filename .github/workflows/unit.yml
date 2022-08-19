@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - .github/workflows/unit.yml
       - src/contracts/**
       - tests/**/*.test.ts
   workflow_dispatch:

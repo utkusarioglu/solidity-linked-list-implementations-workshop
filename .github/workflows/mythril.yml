@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - .github/workflows/mythril.yml
       - src/contracts/**
   workflow_dispatch:
 
