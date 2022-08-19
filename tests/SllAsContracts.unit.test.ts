@@ -2,8 +2,8 @@ import { abi } from "_artifacts/src/contracts/SllAsContracts.sol/SllNode.json";
 import { beforeEachFacade, expect, testAccounts } from "_services/test.service";
 import { ethers } from "hardhat";
 import { type SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { type SllAsContracts } from "_typechain/SllAsContracts.sol/SllAsContracts";
-import { type SllNode } from "_typechain/SllAsContracts.sol/SllNode";
+import { type SllAsContracts } from "_typechain/SllAsContracts.sol";
+import { type SllNode } from "_typechain/SllAsContracts.sol";
 
 const CONTRACT_NAME = "SllAsContracts";
 
