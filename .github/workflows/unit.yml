@@ -1,0 +1,43 @@
+name: Run unit Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - tests/**/*.test.ts
+
+jobs:
+  run-unit-tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    container:
+      image: utkusarioglu/ethereum-dev-environment:latest
+      # options: --user=0:0
+      env:
+        COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
+        INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
+        ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+        ALCHEMY_ETHEREUM_KOVAN_API_KEY:
+          ${{ secrets.ALCHEMY_ETHEREUM_KOVAN_API_KEY }}
+        ALCHEMY_POLYGON_MUMBAI_API_KEY:
+          ${{ secrets.ALCHEMY_POLYGON_MUMBAI_API_KEY }}
+        GOERLI_DEPLOYER_PK: ${{ secrets.GOERLI_DEPLOYER_PK }}
+        LOCAL_DEPLOYER_PK: ${{ secrets.LOCAL_DEPLOYER_PK }}
+        LOCAL_USER_1_PK: ${{ secrets.LOCAL_USER_1_PK }}
+        LOCAL_USER_2_PK: ${{ secrets.LOCAL_USER_2_PK }}
+        LOCAL_USER_3_PK: ${{ secrets.LOCAL_USER_3_PK }}
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+          with:
+            fetch-depth: 2
+      - name: Install dependencies
+        shell: bash
+        run: yarn --frozen-lockfile --no-progress --production false
+      - name: Compile contracts
+        shell: bash
+        run: yarn hardhat compile
+      - name: Run unit tests
+        shell: bash
+        run: yarn test
