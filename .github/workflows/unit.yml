@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - src/contracts/**
       - tests/**/*.test.ts
   workflow_dispatch:
 
