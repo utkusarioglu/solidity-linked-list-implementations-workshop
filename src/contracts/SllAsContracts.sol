@@ -142,10 +142,6 @@ contract SllNode {
     data = initialData;
   }
 
-  function setNext(SllNode nextSllNode) public {
-    next = nextSllNode;
-  }
-
   function setData(bytes32 newData) public {
     data = newData;
   }
@@ -156,5 +152,9 @@ contract SllNode {
 
   function getNext() public view returns (SllNode) {
     return next;
+  }
+
+  function setNext(SllNode nextSllNode) public {
+    next = nextSllNode;
   }
 }
