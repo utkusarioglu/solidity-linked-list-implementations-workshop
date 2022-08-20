@@ -1,4 +1,3 @@
-console.log("hardhat.config.cwd", process.cwd());
 require("dotenv").config();
 import "tsconfig-paths/register";
 import "hardhat-gas-reporter";
