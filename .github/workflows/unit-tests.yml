@@ -1,17 +1,18 @@
-name: Slither
+name: Unit Tests
 
 on:
   push:
     branches:
       - main
     paths:
-      - .github/workflows/slither.yml
+      - .github/workflows/unit.yml
       - src/contracts/**
+      - tests/**/*.unit.test.ts
   workflow_dispatch:
 
 jobs:
-  run-slither-analysis:
-    name: Run Slither analysis
+  run-unit-tests:
+    name: Run unit tests
     runs-on: ubuntu-latest
     container:
       image: utkusarioglu/ethereum-devcontainer:latest
@@ -33,16 +34,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: Install dependencies
-        shell: bash
         run: yarn --frozen-lockfile --no-progress --production false
       - name: Compile contracts
-        shell: bash
         run: yarn hardhat compile
-      - name: Install solc for crytic-compile
-        shell: bash
-        run: scripts/solc-select-install.sh
-      - name: Slither analysis
-        shell: bash
-        run: scripts/slither-analyze.sh
+      - name: Run unit tests
+        run: yarn test

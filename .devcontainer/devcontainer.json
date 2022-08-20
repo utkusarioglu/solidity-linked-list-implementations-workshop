@@ -15,7 +15,9 @@
   "extensions": [
     "JuanBlanco.solidity",
     "MythX.mythxvsc",
-    "joaompinto.vscode-graphviz"
+    "joaompinto.vscode-graphviz",
+    "cschleiden.vscode-github-actions",
+    "GitHub.vscode-pull-request-github"
   ],
   "postCreateCommand": "scripts/post-create-command.sh",
   "features": {
