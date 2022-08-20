@@ -36,14 +36,8 @@ jobs:
         with:
           fetch-depth: 1
       - name: Install dependencies
-        shell: bash
         run: yarn --frozen-lockfile --no-progress --production false
       - name: Compile contracts
-        shell: bash
         run: yarn hardhat compile
-      - name: ls everything
-        shell: bash
-        run: ls artifacts
       - name: Run unit tests
-        shell: bash
         run: yarn test
