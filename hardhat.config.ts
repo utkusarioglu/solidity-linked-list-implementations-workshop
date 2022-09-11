@@ -27,7 +27,7 @@ const hardhatConfig = {
   solidity: "0.8.7",
   defaultNetwork: "hardhat",
   paths: {
-    sources: "./src/contracts",
+    sources: "src/contracts",
     tests: "tests",
     cache: "artifacts/cache",
     artifacts: "artifacts/hardhat",
@@ -48,12 +48,12 @@ const hardhatConfig = {
       saveDeployments: true,
       accounts: hardhatAccounts(),
       tags: ["local"],
-      // forking: {
-      //   enabled: true,
-      //   url: `https://polygon-mumbai.g.alchemy.com/v2/${config.get(
-      //     "apiKeys.alchemy.polygon.mumbai"
-      //   )}`,
-      // },
+      forking: {
+        enabled: config.get("features.forking"),
+        url: `https://polygon-mumbai.g.alchemy.com/v2/${config.get(
+          "apiKeys.alchemy.polygon.mumbai"
+        )}`,
+      },
     },
 
     geth1: {

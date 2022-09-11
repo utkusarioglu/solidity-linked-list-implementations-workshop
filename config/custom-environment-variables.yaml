@@ -22,3 +22,8 @@ apiKeys:
       kovan: ALCHEMY_ETHEREUM_KOVAN_API_KEY
     polygon:
       mumbai: ALCHEMY_POLYGON_MUMBAI_API_KEY
+
+features:
+  forking:
+    __name: FORKING_ENABLED
+    __format: boolean

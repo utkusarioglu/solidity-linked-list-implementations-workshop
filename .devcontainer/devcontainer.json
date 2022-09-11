@@ -6,21 +6,22 @@
   ],
   "service": "solidity-linked-list-implementations",
   "workspaceFolder": "/utkusarioglu/workshops/solidity-linked-list-implementations",
-  "settings": {
-    "workbench.colorCustomizations": {
-      "activityBar.background": "#ddb01b",
-      "activityBar.foreground": "#000000"
-    }
-  },
-  "extensions": [
-    "JuanBlanco.solidity",
-    "MythX.mythxvsc",
-    "joaompinto.vscode-graphviz",
-    "cschleiden.vscode-github-actions",
-    "GitHub.vscode-pull-request-github"
-  ],
   "postCreateCommand": "scripts/post-create-command.sh",
-  "features": {
-    "github-cli": "latest"
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.colorCustomizations": {
+          "activityBar.background": "#ddb01b",
+          "activityBar.foreground": "#000000"
+        }
+      },
+      "extensions": [
+        "JuanBlanco.solidity",
+        "MythX.mythxvsc",
+        "joaompinto.vscode-graphviz",
+        "cschleiden.vscode-github-actions",
+        "GitHub.vscode-pull-request-github"
+      ],
+    }
   }
 }
