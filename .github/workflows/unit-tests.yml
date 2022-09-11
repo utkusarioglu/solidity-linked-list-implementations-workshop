@@ -15,7 +15,7 @@ jobs:
     name: Run unit tests
     runs-on: ubuntu-latest
     container:
-      image: utkusarioglu/ethereum-devcontainer:latest
+      image: utkusarioglu/ethereum-devcontainer:1.0.4
       options: --user=0:0
       env:
         COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
