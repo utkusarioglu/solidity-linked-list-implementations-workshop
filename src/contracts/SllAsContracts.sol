@@ -23,7 +23,7 @@ contract SllAsContracts {
     return size > 0;
   }
 
-  function createLinks(uint256 count) external {
+  function createNodes(uint256 count) external {
     if (count == 0) {
       return;
     }
