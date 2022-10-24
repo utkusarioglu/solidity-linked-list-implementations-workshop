@@ -28,26 +28,26 @@ export function mumbaiAccounts() {
 export function namedAccounts() {
   return {
     deployer: {
-      hardhat: config.get("accounts.local.deployer.address"),
-      geth1: config.get("accounts.local.deployer.address"),
-      geth2: config.get("accounts.local.deployer.address"),
-      goerli: config.get("accounts.goerli.deployer.address"),
-      mumbai: config.get("accounts.goerli.deployer.address"),
+      hardhat: config.get<string>("accounts.local.deployer.address"),
+      geth1: config.get<string>("accounts.local.deployer.address"),
+      geth2: config.get<string>("accounts.local.deployer.address"),
+      goerli: config.get<string>("accounts.goerli.deployer.address"),
+      mumbai: config.get<string>("accounts.goerli.deployer.address"),
     },
     user1: {
-      hardhat: config.get("accounts.local.user1.address"),
-      geth1: config.get("accounts.local.user1.address"),
-      geth2: config.get("accounts.local.user1.address"),
+      hardhat: config.get<string>("accounts.local.user1.address"),
+      geth1: config.get<string>("accounts.local.user1.address"),
+      geth2: config.get<string>("accounts.local.user1.address"),
     },
     user2: {
-      hardhat: config.get("accounts.local.user2.address"),
-      geth1: config.get("accounts.local.user2.address"),
-      geth2: config.get("accounts.local.user2.address"),
+      hardhat: config.get<string>("accounts.local.user2.address"),
+      geth1: config.get<string>("accounts.local.user2.address"),
+      geth2: config.get<string>("accounts.local.user2.address"),
     },
     user3: {
-      hardhat: config.get("accounts.local.user3.address"),
-      geth1: config.get("accounts.local.user3.address"),
-      geth2: config.get("accounts.local.user3.address"),
+      hardhat: config.get<string>("accounts.local.user3.address"),
+      geth1: config.get<string>("accounts.local.user3.address"),
+      geth2: config.get<string>("accounts.local.user3.address"),
     },
   };
 }
