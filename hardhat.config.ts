@@ -34,7 +34,7 @@ const hardhatConfig: HardhatUserConfig = {
     artifacts: "artifacts/hardhat",
     imports: "artifacts/imports",
     deployments: "artifacts/deployments",
-    deploy: "src/deploy",
+    deploy: "src/deployers",
     newStorageLayoutPath: "artifacts/storage-layout",
   },
 
