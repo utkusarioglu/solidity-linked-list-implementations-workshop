@@ -49,7 +49,7 @@ export async function getSigner(
  * @param obj js object with sol struct keys and values.
  * @returns a tuple with an array and a solc struct array
  */
-export function asEvmStruct<G extends [Record<string, unknown>, unknown[]]>(
+export function asEvmObject<G extends [Record<string, unknown>, unknown[]]>(
   obj: G[0]
 ): {
   struct: G[0] & G[1];

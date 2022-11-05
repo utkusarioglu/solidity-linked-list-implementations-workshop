@@ -6,7 +6,9 @@
   "license": "MIT",
   "types": "artifacts/typechain",
   "scripts": {
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "console": "hardhat console --network localhost"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.1",
