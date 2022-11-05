@@ -2,6 +2,6 @@ version: "3.9"
 
 services:
   solidity-linked-list-implementations:
-    image: utkusarioglu/ethereum-devcontainer:1.0.5
+    image: utkusarioglu/ethereum-devcontainer:1.0.7
     volumes:
       - ..:/utkusarioglu/workshops/solidity-linked-list-implementations

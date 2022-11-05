@@ -1,32 +1,34 @@
 name: Slither Analyze
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - .github/workflows/slither.yml
-      - src/contracts/**
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      artifact_name: 
+        type: string
+        default: logs
 
 jobs:
   run-slither-analysis:
     name: Run Slither analysis
     runs-on: ubuntu-latest
     container:
-      image: utkusarioglu/ethereum-devcontainer:1.0.4
+      image: utkusarioglu/ethereum-devcontainer:1.0.7
       options: --user=0:0
       env:
         COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
         INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
         ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
-        ALCHEMY_ETHEREUM_KOVAN_API_KEY: ${{ secrets.ALCHEMY_ETHEREUM_KOVAN_API_KEY }}
-        ALCHEMY_POLYGON_MUMBAI_API_KEY: ${{ secrets.ALCHEMY_POLYGON_MUMBAI_API_KEY }}
+        ALCHEMY_ETHEREUM_KOVAN_API_KEY:
+          ${{ secrets.ALCHEMY_ETHEREUM_KOVAN_API_KEY }}
+        ALCHEMY_POLYGON_MUMBAI_API_KEY:
+          ${{ secrets.ALCHEMY_POLYGON_MUMBAI_API_KEY }}
         GOERLI_DEPLOYER_PK: ${{ secrets.GOERLI_DEPLOYER_PK }}
         LOCAL_DEPLOYER_PK: ${{ secrets.LOCAL_DEPLOYER_PK }}
         LOCAL_USER_1_PK: ${{ secrets.LOCAL_USER_1_PK }}
         LOCAL_USER_2_PK: ${{ secrets.LOCAL_USER_2_PK }}
         LOCAL_USER_3_PK: ${{ secrets.LOCAL_USER_3_PK }}
+        FORKING_ENABLED: ${{ secrets.FORKING_ENABLED }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,12 +37,11 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: yarn --frozen-lockfile --no-progress --production false
-      - name: Compile contracts
-        shell: bash
-        run: yarn hardhat compile
-      - name: Install solc for crytic-compile
-        shell: bash
-        run: scripts/solc-select-install.sh
       - name: Slither analysis
         shell: bash
         run: scripts/slither-analyze.sh
+      - name: Save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.artifact_name }}
+          path: artifacts

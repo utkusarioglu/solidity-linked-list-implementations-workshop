@@ -24,6 +24,6 @@ apiKeys:
       mumbai: ALCHEMY_POLYGON_MUMBAI_API_KEY
 
 features:
-  forking:
+  forking: 
     __name: FORKING_ENABLED
     __format: boolean

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 yarn
-. scripts/solc-select-install.sh
+scripts/git-update-status.sh

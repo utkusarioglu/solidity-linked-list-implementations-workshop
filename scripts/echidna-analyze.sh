@@ -1,33 +1,51 @@
 #!/bin/bash
 
 source /opt/venv/slither/bin/activate
+source ${0%/*}/analysis-common.sh
+scripts/solc-select-install.sh
 
-ANALYSIS_FOLDER=./artifacts/echidna
-CONTRACTS="Main"
+FUZZ_CONTRACT_SUFFIX="fuzz.test.sol"
+ANALYSIS_LOG_SUFFIX="echidna.log"
 
-mkdir -p $ANALYSIS_FOLDER
+tests_path=$(get_tests_path)
+sources_path=$(get_sources_path)
+current_date=$(get_current_date_string)
 
-for SRC_CONTRACT in $CONTRACTS
-do
-  FUZZ_CONTRACT_NAME="${SRC_CONTRACT}Fuzz"
-  FUZZ_CONTRACT_FILE="${SRC_CONTRACT}.fuzz.test.sol"
-  FUZZ_CONTRACT_PATH="tests/${FUZZ_CONTRACT_FILE}"
-  ANALYSIS_PATH="${ANALYSIS_FOLDER}/${SRC_CONTRACT}.analysis.txt"
+# echo "Creating analysis artifacts folder: '$ANALYSIS_ARTIFACTS_FOLDER'…"
+# mkdir -p "$ANALYSIS_ARTIFACTS_FOLDER"
+main() {
+  artifacts_folder=$(create_artifacts_subfolder "echidna")
+  echo "Created artifacts folder: '$artifacts_folder'…"
 
-  if [ ! -f "$FUZZ_CONTRACT_PATH" ];
-  then
-    echo "$FUZZ_CONTRACT_PATH is not available, skipping"
-    continue 
-  fi
+  contract_names=$(get_contract_names)
+  echo "Found contracts: '$contract_names'"
 
-  echo "Testing: $FUZZ_CONTRACT_FILE"
+  for contract_name in $contract_names
+  do
+    source_contract_path="$sources_path/$contract_name.sol"
+    fuzz_contract_name="${contract_name}Fuzz"
+    fuzz_contract_file="$contract_name.$FUZZ_CONTRACT_SUFFIX"
+    fuzz_contract_path="$tests_path/$fuzz_contract_file"
+    analysis_log_filename="$contract_name-$current_date.$ANALYSIS_LOG_SUFFIX"
+    analysis_log_path="$artifacts_folder/$analysis_log_filename"
 
-  echidna-test \
-    "$FUZZ_CONTRACT_PATH" \
-    --contract "$FUZZ_CONTRACT_NAME" \
-    --config echidna.config.yml \
-    --test-mode property \
-    > "$ANALYSIS_PATH"
+    if [ ! -f "$fuzz_contract_path" ];
+    then
+      echo "$fuzz_contract_path is not available, skipping"
+      continue 
+    fi
 
-  echo "Complete: $FUZZ_CONTRACT_FILE"
-done
+    echo "Testing: '$fuzz_contract_file'…"
+    echidna-test \
+      "$fuzz_contract_path" \
+      --contract "$fuzz_contract_name" \
+      --config echidna.config.yml \
+      --test-mode property \
+      | tee "$analysis_log_path"
+
+    echo "Analysis log is available at '$analysis_log_path'"
+    echo "Finished: $fuzz_contract_file."
+  done
+}
+
+main

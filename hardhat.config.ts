@@ -9,7 +9,7 @@ import "solidity-coverage";
 import "@openzeppelin/hardhat-upgrades";
 import "_tasks/account-balances.task";
 import "_tasks/named-accounts.task";
-import "_tasks/solidity-version.task";
+import "_tasks/config-value.task";
 import "hardhat-storage-layout";
 // import "@nomiclabs/hardhat-etherscan";
 import "hardhat-deploy";
@@ -37,17 +37,15 @@ const hardhatConfig: HardhatUserConfig = {
     deploy: "src/deployers",
     newStorageLayoutPath: "artifacts/storage-layout",
   },
-
   solidity: {
-    version: "0.8.7",
+    version: "0.8.16",
     settings: {
       optimizer: {
         enabled: true,
-        runs: 100,
+        runs: 200,
       },
     },
   },
-
   networks: {
     hardhat: {
       saveDeployments: true,
@@ -77,12 +75,14 @@ const hardhatConfig: HardhatUserConfig = {
 
     ...(config.has("accounts.goerli") && {
       goerli: {
-        url: `https://goerli.infura.io/v3/${config.get("apiKeys.infura")}`,
+        url: `https://goerli.infura.io/v3/${config.get<string>(
+          "apiKeys.infura"
+        )}`,
         accounts: goerliAccounts(),
       },
 
       mumbai: {
-        url: `https://polygon-mumbai.g.alchemy.com/v2/${config.get(
+        url: `https://polygon-mumbai.g.alchemy.com/v2/${config.get<string>(
           "apiKeys.alchemy"
         )}`,
         accounts: mumbaiAccounts(),
@@ -101,9 +101,12 @@ const hardhatConfig: HardhatUserConfig = {
     overwrite: true,
     runOnCompile: true,
   },
-  // etherscan: {
-  //   apiKey: config.get<string>("apiKeys.etherscan"),
-  // },
+
+  ...(config.has("apiKeys.etherscan") && {
+    etherscan: {
+      apiKey: config.get<string>("apiKeys.etherscan"),
+    },
+  }),
 
   ...(config.has("apiKeys.coinMarketCap") && {
     gasReporter: {

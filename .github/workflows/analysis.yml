@@ -1,0 +1,69 @@
+name: Run Analyses
+
+on: 
+  push:
+    tags:
+      - experiment/**/**/**
+
+jobs:
+  values:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact_name: ${{ steps.values.outputs.artifact_name }}
+    steps:
+      - name: Produce values needed for other jobs
+        id: values
+        run: |
+          artifact_name="solidity-linked-list-implementations.artifacts-$(date +%y%m%d-%H%M%S)"
+          echo "Using artifact name: '$artifact_name'"
+          echo "artifact_name=$artifact_name" >> $GITHUB_OUTPUT
+    
+  echidna-analyze:
+    uses: ./.github/workflows/echidna-analyze.yml
+    secrets: inherit
+    needs: 
+      - values
+    with:
+      artifact_name: ${{ needs.values.outputs.artifact_name }}
+
+  mythril-analyze:
+    uses: ./.github/workflows/mythril-analyze.yml
+    secrets: inherit
+    needs: 
+      - values
+    with:
+      artifact_name: ${{ needs.values.outputs.artifact_name }}
+
+  slither-analyze:
+    uses: ./.github/workflows/slither-analyze.yml
+    secrets: inherit
+    needs: 
+      - values
+    with:
+      artifact_name: ${{ needs.values.outputs.artifact_name }}
+
+  manticore-analyze:
+    uses: ./.github/workflows/manticore-analyze.yml
+    secrets: inherit
+    needs: 
+      - values
+    with:
+      artifact_name: ${{ needs.values.outputs.artifact_name }}
+
+  # # notify:
+  # #   name: Analysis ended
+  # #   runs-on: ubuntu-latest
+  # #   needs:
+  # #     - echidna-analyze
+  # #     - mythril-analyze
+  # #     - slither-analyze
+  # #     - manticore-analyze
+  # #   steps:
+  # #     - name: Telegram notifications
+  # #       if: always()
+  # #       uses: utkusarioglu/telegram-notifications@main
+  # #       with:
+  # #         telegram_id: ${{ secrets.TELEGRAM_ID }}
+  # #         telegram_token: ${{ secrets.TELEGRAM_TOKEN }}
+  # #         job_status: ${{ job.status }}
+  # #         github_context: ${{ toJson(github) }}

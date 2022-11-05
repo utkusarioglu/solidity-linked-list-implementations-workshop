@@ -1,5 +1,5 @@
 import { strict as assert } from "assert";
-import { type DeployFunction } from "hardhat-deploy/dist/types";
+import { DeployFunction } from "hardhat-deploy/dist/types";
 
 type SimpleDeployFactory = (
   enabled: boolean,
@@ -18,7 +18,6 @@ type SimpleDeployFactory = (
 export const simpleDeploy: SimpleDeployFactory =
   (enabled, contractName, args) =>
   async ({ deployments: { deploy }, getNamedAccounts, storageLayout }) => {
-    console.log(`Deploying ${contractName}…`);
     if (!enabled) {
       console.log(
         `Skipping contract "${contractName}" as it is set as disabled`
