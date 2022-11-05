@@ -1,21 +1,50 @@
 #!/bin/bash
 
 source /opt/venv/mythril/bin/activate
+source ${0%/*}/analysis-common.sh
+scripts/solc-select-install.sh
+
+ANALYSIS_LOG_SUFFIX="mythril.log"
+TEMP_SOLC_JSON_PATH="/tmp/solc-settings.json"
+
+current_date=$(get_current_date_string)
+sources_path=$(get_sources_path)
+
+compile_temp_solc_json() {
+  jq '.settings' solc.json > $TEMP_SOLC_JSON_PATH
+}
+
+remove_temp_solc_json() {
+  rm "$TEMP_SOLC_JSON_PATH"
+}
 
 # Goes through the contracts in `src/contracts` uses `solc.json` at repo 
 # root for remappings needed for `crytic-compile` to do its thing
 # @dev
 # mythril for some reason expects only the `settings` section of the config
-# object. To retrieve this section, a temp file is created at `TEMP_JSON`
+# object. To retrieve this section, a temp file is created at `solc_json`
 main() {
-  TEMP_JSON=/tmp/solc-settings.json
-  jq '.settings' solc.json > $TEMP_JSON
-  for contract in src/contracts/*;
+  compile_temp_solc_json
+  artifacts_folder=$(create_artifacts_subfolder "mythril")
+  echo "Created artifacts folder: '$artifacts_folder'…"
+
+  contract_names=$(get_contract_names)
+  echo "Found contracts: '$contract_names'"
+
+  for contract_name in $contract_names;
   do
-    echo "Analyzing \"$contract\"..."
-    myth analyze $contract --solc-json $TEMP_JSON
+    echo "Analyzing '$contract_name'…"
+    contract_path="$sources_path/$contract_name.sol"
+    analysis_log_filename="$contract_name-$current_date.$ANALYSIS_LOG_SUFFIX"
+    analysis_log_path="$artifacts_folder/$analysis_log_filename"
+
+    myth analyze "$contract_path" --solc-json "$TEMP_SOLC_JSON_PATH" \
+      | tee "$analysis_log_path"
+
+    echo "Analysis log is available at '$analysis_log_path'"
+    echo "Finished: '$contract_name'"
   done
-  rm $TEMP_JSON
+  remove_temp_solc_json
 }
 
 main

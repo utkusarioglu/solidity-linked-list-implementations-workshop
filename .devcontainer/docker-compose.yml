@@ -1,12 +1,19 @@
 version: "3.9"
 services:
   solidity-linked-list-implementations:
+    environment:
+      GH_TOKEN: ${GH_TOKEN}
     volumes:
-      - vscode-extensions:/root/.vscode-server/extensions
-      - vscode-extensions-insiders:/root/.vscode-server-insiders/extensions
-      - ~/.config/gh:/home/hardhat/.config/gh:ro
+      - type: volume
+        source: vscode-server-extensions
+        target: ${HOME}/.vscode-server/extensions
+      - type: volume
+        source: vscode-server-insiders-extensions
+        target: ${HOME}/.vscode-server-insiders/extensions
     command: /bin/sh -c "while sleep 1000; do :; done"
 
 volumes:
-  vscode-extensions:
-  vscode-extensions-insiders:
+  vscode-server-extensions:
+    name: solidity-linked-list-implementations-vscode-server-extensions
+  vscode-server-insiders-extensions:
+    name: solidity-linked-list-implementations-vscode-server-extensions-insiders

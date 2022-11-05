@@ -1,4 +1,4 @@
-name: Mythril Analyze
+name: Manticore Analyze
 
 on:
   workflow_dispatch:
@@ -9,11 +9,12 @@ on:
         default: logs
 
 jobs:
-  run-slither-analysis:
-    name: Run Mythril analysis
+  run-manticore-analysis:
+    name: Run Manticore analysis
     runs-on: ubuntu-latest
     container:
       image: utkusarioglu/ethereum-devcontainer:1.0.7
+      options: --user=0:0
       env:
         COINMARKETCAP_API_KEY: ${{ secrets.COINMARKETCAP_API_KEY }}
         INFURA_API_KEY: ${{ secrets.INFURA_API_KEY }}
@@ -28,7 +29,6 @@ jobs:
         LOCAL_USER_2_PK: ${{ secrets.LOCAL_USER_2_PK }}
         LOCAL_USER_3_PK: ${{ secrets.LOCAL_USER_3_PK }}
         FORKING_ENABLED: ${{ secrets.FORKING_ENABLED }}
-      options: --user 0:0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -37,9 +37,9 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: yarn --frozen-lockfile --no-progress --production false
-      - name: Mythril analysis
+      - name: Manticore analysis
         shell: bash
-        run: scripts/mythril-analyze.sh
+        run: scripts/manticore-analyze.sh
       - name: Save artifacts
         uses: actions/upload-artifact@v3
         with:
