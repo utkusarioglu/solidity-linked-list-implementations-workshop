@@ -16,6 +16,7 @@ import "hardhat-deploy";
 import "@typechain/hardhat";
 import "@typechain/ethers-v5";
 import "hardhat-tracer";
+import { removeConsoleLog } from "hardhat-preprocessor";
 import config from "config";
 import {
   gethAccounts,
@@ -100,6 +101,11 @@ const hardhatConfig: HardhatUserConfig = {
   spdxLicenseIdentifier: {
     overwrite: true,
     runOnCompile: true,
+  },
+  preprocess: {
+    eachLine: removeConsoleLog(
+      (hre) => !["localhost", "hardhat"].includes(hre.network.name)
+    ),
   },
 
   ...(config.has("apiKeys.etherscan") && {

@@ -6,6 +6,7 @@ scripts/solc-select-install.sh
 
 TEMP_SOLC_JSON_PATH="/tmp/solc-settings.json"
 ANALYSIS_LOG_SUFFIX="manticore.log"
+TIMEOUT_PER_CONTRACT=$(( 1 * 60 * 60 )) # 1 hour
 
 sources_path=$(get_sources_path)
 current_date=$(get_current_date_string)
@@ -39,6 +40,7 @@ main() {
       --solc-remaps "$solc_remaps" \
       --contract "$contract_name" \
       --workspace "$mcore_workspace" \
+      --timeout "$TIMEOUT_PER_CONTRACT" \
       "$source_contract_path" \
       | tee "$analysis_log_path"
 
