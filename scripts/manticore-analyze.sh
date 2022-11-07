@@ -25,7 +25,6 @@ main() {
   echo "Found contracts: '$contract_names'"
 
   solc_remaps=$(get_solc_remaps)
-  echo "solc remaps: $solc_remaps"
   for contract_name in $contract_names;
   do
     echo "Testing: '$contract_name'…"
@@ -40,7 +39,7 @@ main() {
       --solc-remaps "$solc_remaps" \
       --contract "$contract_name" \
       --workspace "$mcore_workspace" \
-      --timeout "$TIMEOUT_PER_CONTRACT" \
+      --core.timeout "$TIMEOUT_PER_CONTRACT" \
       "$source_contract_path" \
       | tee "$analysis_log_path"
 
