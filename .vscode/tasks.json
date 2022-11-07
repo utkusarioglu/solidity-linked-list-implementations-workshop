@@ -147,6 +147,21 @@
         "color": "terminal.ansiBlue",
         "id": "beaker"
       }
+    },
+    {
+      "type": "shell",
+      "command": "scripts/slither-analyze.sh",
+      "problemMatcher": [],
+      "label": "Analyze with Slither",
+      "detail": "Run security analysis with Slither",
+      "presentation": {
+        "panel": "dedicated",
+        "showReuseMessage": false
+      },
+      "icon": {
+        "color": "terminal.ansiBlue",
+        "id": "beaker"
+      }
     }
   ]
 }
