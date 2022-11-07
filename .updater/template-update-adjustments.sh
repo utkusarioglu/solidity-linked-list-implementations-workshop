@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source scripts/git-checks.sh
+source ${0%/*}/checks.sh
 check_repo_config
-source scripts/git-utils.sh
+source ${0%/*}/utils.sh
 
 git_origin_update() {
   record_target=$1
@@ -32,7 +32,7 @@ do_adjustments() {
     continue
   fi
   echo "Replacing '$current' with '$replacement'…"
-  find . -type f \( ! -iwholename "./scripts/setup.sh" ! -iname ".git" \) \
+  find . -type f \( ! -iwholename "./${0%/*}/setup.sh" ! -iname ".git" \) \
     -exec sed -i "s:$current:$replacement:g" {} \;
 }
 

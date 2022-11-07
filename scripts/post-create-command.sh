@@ -1,4 +1,4 @@
 #!/bin/bash
 
 yarn
-scripts/git-update-status.sh
+.updater/update-status.sh
