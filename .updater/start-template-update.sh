@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source scripts/git-checks.sh
+source ${0%/*}/checks.sh
 check_repo_config
 check_repo_template_config
 
@@ -80,7 +80,7 @@ EOF
   exit 4
 fi
 
-source scripts/git-utils.sh
+source ${0%/*}/utils.sh
 git_remote_add $TEMPLATE_REPO_ORIGIN $TEMPLATE_REPO_URL
 
 if [[ "$(git remote)" != *"$TEMPLATE_REPO_ORIGIN"* ]];
@@ -127,7 +127,7 @@ git_template_update_record \
   "$template_date_epoch"
 
 echo "Applying standard update adjustments…"
-scripts/git-template-update-adjustments.sh \
+${0%/*}/template-update-adjustments.sh \
   $template_repo_url \
   $repo_class \
   $repo_service \

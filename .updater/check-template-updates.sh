@@ -1,5 +1,5 @@
-source scripts/git-checks.sh
-source scripts/git-utils.sh
+source ${0%/*}/checks.sh
+source ${0%/*}/utils.sh
 
 check_template_updates() {
   template_repo_origin=$1
@@ -112,7 +112,7 @@ display_repo_template_updates() {
   if [[ "$repo_template_status" == *"has an update"* ]]
   then
     echo -e "${GREEN_TEXT}You have a repo template update!${DEFAULT_TEXT}"
-    echo "To start, run \`scripts/git-start-template-update.sh repo\`"
+    echo -e "To start, run ${BOLD_BLUE_TEXT}.updater/start-template-update.sh repo${DEFAULT_TEXT}"
     echo
   fi
 
@@ -133,7 +133,7 @@ display_parent_template_updates() {
   if [[ "$parent_template_status" == *"has an update"* ]]
   then
     echo -e "${GREEN_TEXT}You have a parent template update!${DEFAULT_TEXT}"
-    echo "To start, run \`scripts/git-start-template-update.sh parent\`"
+    echo -e "To start, run ${BOLD_BLUE_TEXT}.updater/start-template-update.sh parent${DEFAULT_TEXT}"
     echo
   fi
 

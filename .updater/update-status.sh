@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source scripts/git-checks.sh
-source scripts/git-check-template-updates.sh
+source ${0%/*}/checks.sh
+source ${0%/*}/check-template-updates.sh
 
 check_repo_update_type
 check_repo_template_updates
