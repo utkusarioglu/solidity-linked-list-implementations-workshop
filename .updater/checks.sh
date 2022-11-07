@@ -11,14 +11,13 @@ source .env 2> /dev/null
 source $REPO_CONFIG_FILE
 
 check_repo_config() {
-  if [ ! -f ".repo.config" ];
+  if [ ! -f "$REPO_CONFIG_FILE" ];
   then
-    echo "Error \`.repo.config\` file is required to configure the scripts' behavior"
+    echo "Error \`$REPO_CONFIG_FILE\` file is required to configure the scripts' behavior"
     exit 20
   fi
 
-  source .repo.config
-
+  source $REPO_CONFIG_FILE
 }
 
 check_repo_template_config() {
