@@ -1,4 +1,4 @@
 #!/bin/bash
 
 yarn
-.updater/update-status.sh
+.elam/update-status.sh
