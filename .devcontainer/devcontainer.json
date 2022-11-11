@@ -11,8 +11,8 @@
     "vscode": {
       "settings": {
         "workbench.colorCustomizations": {
-          "activityBar.background": "#2c42a7",
-          "activityBar.foreground": "#FFFFFF"
+          "activityBar.background": "#EE0000",
+          "activityBar.foreground": "#000000"
         }
       },
       "extensions": [
