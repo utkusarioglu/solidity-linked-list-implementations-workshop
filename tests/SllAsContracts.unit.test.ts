@@ -6,8 +6,34 @@ import {
   type SllAsContracts,
   type SllNode,
 } from "_typechain/SllAsContracts.sol";
+import { asEvmObject } from "_services/test.service";
 
 const CONTRACT_NAME = "SllAsContracts";
+
+/**
+ * Creates multiple nodes and returns their expected values
+ */
+async function createNodes(instance: SllAsContracts, nodeCount: number) {
+  const nodes = Promise.all(
+    Array(nodeCount)
+      .fill(null)
+      .map(async (_, i) => {
+        try {
+          const value = ethers.utils.formatBytes32String(i.toString());
+          // const next = ethers.BigNumber.from(i === nodeCount - 1 ? -1 : i + 1);
+          const receipt = await (await instance.addNode(value)).wait();
+          return {
+            expected: asEvmObject({ value }).struct,
+            receipt,
+          };
+        } catch (e) {
+          console.error("Error while creating node:", e);
+          process.exit(1);
+        }
+      })
+  );
+  return nodes;
+}
 
 describe(CONTRACT_NAME, () => {
   testAccounts.forEach(({ index, describeMessage }) => {
@@ -26,62 +52,40 @@ describe(CONTRACT_NAME, () => {
       });
 
       describe("getHead", () => {
+        it("Returns 0 address if there is no head", async () => {
+          const response = await instance.getHead();
+          const expected = ethers.constants.AddressZero;
+          expect(expected).to.equal(response);
+        });
+
         it("returns address", async () => {
           const head = await instance.getHead();
           expect(ethers.utils.isAddress(head)).to.be.true;
         });
 
         it("Refers to a node contract", async () => {
-          await instance.createNodes(1);
+          const nodes = await createNodes(instance, 1);
           const head = await instance.getHead();
           const one = new ethers.Contract(head, abi, signer) as SllNode;
           const data = await one.getData();
-          const expected = ethers.BigNumber.from(0);
+          const expected = nodes[0]?.expected["value"];
           expect(data).to.equal(expected);
         });
       });
 
-      describe("createNodes", () => {
-        it("Handles 0", async () => {
-          return expect(instance.createNodes(0)).to.not.emit(
-            instance,
-            "AddSllNode"
-          );
+      describe("addNode", () => {
+        it("Uses the first addition as head", async () => {
+          const _nodes = await createNodes(instance, 1);
+          const response = await instance.getHead();
+          const notExpected = ethers.constants.AddressZero;
+          expect(response).to.not.equal(notExpected);
         });
 
-        it("Handles 1", async () => {
-          return expect(instance.createNodes(1)).to.emit(
-            instance,
-            "AddSllNode"
-          );
-        });
-
-        it("Handles head being created twice", async () => {
-          await expect(instance.createNodes(1)).to.emit(instance, "AddSllNode");
-          return expect(instance.createNodes(1)).to.not.emit(
-            instance,
-            "AddSllNode"
-          );
-        });
-
-        it("Handles creation of 2", async () => {
-          return expect(instance.createNodes(2))
+        it("Emits `AddNode` when as expected", async () => {
+          const data = ethers.utils.formatBytes32String("1");
+          return expect(instance.addNode(data))
             .to.emit(instance, "AddSllNode")
-            .to.emit(instance, "AddSllNode")
-            .to.emit(instance, "AddSllNode");
-        });
-
-        /**
-         * TODO there needs to be a decision on how to handle double
-         * creation. Currently the contract silently ignores this
-         * while this test expects double creation to be reverted.
-         * Until this decision is made, this test is skipped.
-         */
-        it.skip("Reverts double creation", async () => {
-          await instance.createNodes(2);
-          return expect(instance.createNodes(2)).to.be.revertedWith(
-            "ExistingList"
-          );
+            .withArgs(await instance.getHead(), data, true);
         });
       });
 
@@ -92,21 +96,21 @@ describe(CONTRACT_NAME, () => {
         });
 
         it("Returns 1 with only head", async () => {
-          await instance.createNodes(1);
+          await createNodes(instance, 1);
           const expected = ethers.BigNumber.from(1);
           expect(await instance.getLength()).to.equal(expected);
         });
 
         it("Returns 2 with head + one extra", async () => {
           const count = 2;
-          await instance.createNodes(count);
+          await createNodes(instance, count);
           const expected = ethers.BigNumber.from(count);
           expect(await instance.getLength()).to.equal(expected);
         });
 
         it("Returns correct count for arbitrary values", async () => {
           const count = 10;
-          await instance.createNodes(count);
+          await createNodes(instance, count);
           const expected = ethers.BigNumber.from(count);
           expect(await instance.getLength()).to.equal(expected);
         });
@@ -118,13 +122,13 @@ describe(CONTRACT_NAME, () => {
         });
 
         it("Returns head when there is only one node", async () => {
-          await instance.createNodes(1);
+          await createNodes(instance, 1);
           const headAddress = await instance.getHead();
           expect(await instance.getTail()).to.be.equal(headAddress);
         });
 
         it("Returns 2nd when there are 2 nodes", async () => {
-          await instance.createNodes(2);
+          await createNodes(instance, 2);
           const headAddress = await instance.getHead();
           const head = new ethers.Contract(headAddress, abi, signer) as SllNode;
           const secondAddress = await head.getNext();
@@ -140,14 +144,14 @@ describe(CONTRACT_NAME, () => {
         });
 
         it("Reverts for a non-existent node", async () => {
-          await instance.createNodes(1);
+          await createNodes(instance, 1);
           return expect(instance.getNthFromHead(2)).to.be.revertedWith(
             "Overflow"
           );
         });
 
         it("Returns head on a non-empty list", async () => {
-          await instance.createNodes(3);
+          await createNodes(instance, 3);
           const head = await instance.getHead();
           expect(await instance.getNthFromHead(0)).to.equal(head);
         });
@@ -156,7 +160,7 @@ describe(CONTRACT_NAME, () => {
           .fill(null)
           .forEach((_, i) => {
             it(`Returns node number ${i} as expected`, async () => {
-              await instance.createNodes(10);
+              const nodes = await createNodes(instance, 10);
               const sllNodeAddress = await instance.getNthFromHead(i);
               const sllNode = new ethers.Contract(
                 sllNodeAddress,
@@ -164,7 +168,8 @@ describe(CONTRACT_NAME, () => {
                 signer
               ) as SllNode;
               const sllNodeData = await sllNode.getData();
-              const expected = ethers.BigNumber.from(i);
+              // const expected = ethers.BigNumber.from(i);
+              const expected = nodes[i]?.expected["value"];
               expect(sllNodeData).to.equal(expected);
             });
           });
@@ -176,7 +181,7 @@ describe(CONTRACT_NAME, () => {
         });
 
         it("Returns head when there is single node", async () => {
-          await instance.createNodes(1);
+          await createNodes(instance, 1);
           const initialHead = await instance.getHead();
           await instance.reverse();
           const finalHead = await instance.getHead();
@@ -195,7 +200,7 @@ describe(CONTRACT_NAME, () => {
             );
           };
           const chainLength = 10;
-          await instance.createNodes(chainLength);
+          await createNodes(instance, chainLength);
           const initialAddresses = await getAddresses(chainLength);
           await instance.reverse();
           const finalAddresses = await getAddresses(chainLength);
@@ -209,7 +214,7 @@ describe(CONTRACT_NAME, () => {
         });
 
         it("Returns head when there is single node", async () => {
-          await instance.createNodes(1);
+          await createNodes(instance, 1);
           const initialHead = await instance.getHead();
           await instance.reverseRecursive();
           const finalHead = await instance.getHead();
@@ -228,7 +233,7 @@ describe(CONTRACT_NAME, () => {
             );
           };
           const chainLength = 10;
-          await instance.createNodes(chainLength);
+          await createNodes(instance, chainLength);
           const initialAddresses = await getAddresses(chainLength);
           await instance.reverseRecursive();
           const finalAddresses = await getAddresses(chainLength);
