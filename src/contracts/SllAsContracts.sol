@@ -23,29 +23,16 @@ contract SllAsContracts {
     return size > 0;
   }
 
-  function createNodes(uint256 count) external {
-    if (count == 0) {
-      return;
+  function addNode(bytes32 data) external {
+    SllNode newSllNode = new SllNode(data);
+    bool headExists = isContract(address(head));
+    if (!headExists) {
+      head = newSllNode;
+    } else {
+      SllNode tail = getTail();
+      tail.setNext(newSllNode);
     }
-    if (!isContract(address(head))) {
-      bytes32 value = bytes32(0);
-      head = new SllNode(value);
-      emit AddSllNode(head, value, true);
-    }
-    if (count == 1) {
-      return;
-    }
-    if (isContract(address(head.getNext()))) {
-      revert ExistingList();
-    }
-    SllNode current = head;
-    for (uint256 index = 1; index < count; index++) {
-      bytes32 data = bytes32(abi.encodePacked(index));
-      SllNode newSllNode = new SllNode(data);
-      emit AddSllNode(newSllNode, data, false);
-      current.setNext(newSllNode);
-      current = newSllNode;
-    }
+    emit AddSllNode(newSllNode, data, !headExists);
   }
 
   function getLength() public view returns (uint256) {
