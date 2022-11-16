@@ -30,6 +30,7 @@ jobs:
         LOCAL_USER_1_PK: ${{ secrets.LOCAL_USER_1_PK }}
         LOCAL_USER_2_PK: ${{ secrets.LOCAL_USER_2_PK }}
         LOCAL_USER_3_PK: ${{ secrets.LOCAL_USER_3_PK }}
+        FORKING_ENABLED: ${{ secrets.FORKING_ENABLED }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
