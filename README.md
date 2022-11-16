@@ -1,9 +1,10 @@
-# Hardhat Repo Template
+# Solidity Linked List implementations
 
-Hardhat based template for writing solidity contracts.
+Currently features linked lists built with:
 
-## Some features
+- Contracts
+- Structs
 
-- Runs in devcontainer
-- Contains services for easier deployment and testing
-- Contains testing tools such as echidna, manticore, slither and others.
+## Features
+
+Features unit tests and other analysis tools that come from its repo template.
