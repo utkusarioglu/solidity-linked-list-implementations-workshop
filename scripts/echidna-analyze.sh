@@ -11,13 +11,12 @@ tests_path=$(get_tests_path)
 sources_path=$(get_sources_path)
 current_date=$(get_current_date_string)
 
-# echo "Creating analysis artifacts folder: '$ANALYSIS_ARTIFACTS_FOLDER'…"
-# mkdir -p "$ANALYSIS_ARTIFACTS_FOLDER"
 main() {
   artifacts_folder=$(create_artifacts_subfolder "echidna")
   echo "Created artifacts folder: '$artifacts_folder'…"
 
-  contract_names=$(get_contract_names)
+  sources_path=$(get_sources_path)
+  contract_names=$(get_contract_names $sources_path)
   echo "Found contracts: '$contract_names'"
 
   for contract_name in $contract_names

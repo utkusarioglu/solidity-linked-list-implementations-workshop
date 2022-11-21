@@ -20,7 +20,8 @@ main() {
   artifacts_folder=$(create_artifacts_subfolder "slither")
   echo "Created artifacts folder: '$artifacts_folder'…"
 
-  contract_names=$(get_contract_names)
+  preprocess_contracts $PREPROCESSED_CONTRACTS_PATH
+  contract_names=$(get_contract_names $PREPROCESSED_CONTRACTS_PATH)
   echo "Found contracts: '$contract_names'"
 
   for contract_name in $contract_names;
