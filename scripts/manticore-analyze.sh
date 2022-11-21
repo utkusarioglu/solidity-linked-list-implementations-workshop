@@ -6,7 +6,7 @@ scripts/solc-select-install.sh
 
 TEMP_SOLC_JSON_PATH="/tmp/solc-settings.json"
 ANALYSIS_LOG_SUFFIX="manticore.log"
-TIMEOUT_PER_CONTRACT=$(( 1 * 60 )) # 1 hour
+TIMEOUT_PER_CONTRACT=$(( 1 * 60 * 60 )) # 1 hour
 PREPROCESSED_CONTRACTS_PATH=/tmp/contracts
 
 sources_path=$(get_sources_path)
