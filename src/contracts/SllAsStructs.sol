@@ -41,7 +41,12 @@ contract SllAsStructs {
 
   function addNode(uint256 value) external {
     SllNode memory newNode = SllNode(value, nullPtr);
+
+    emit AddNode(value);
+    console.log("Add value", value);
+
     heap.push(newNode);
+
     if (headPtr == nullPtr) {
       headPtr = 0;
     } else {
@@ -49,8 +54,6 @@ contract SllAsStructs {
       SllNode storage tail = heap[uint256(tailPtr)];
       tail.next = int256(heap.length - 1);
     }
-    emit AddNode(value);
-    console.log("Add value", value);
   }
 
   function getChainLength() public view returns (uint256) {
@@ -69,6 +72,10 @@ contract SllAsStructs {
 
   function getHeap() public view returns (SllNode[] memory) {
     return heap;
+  }
+
+  function getHeadPtr() public view returns (int256) {
+    return headPtr;
   }
 
   function getHead() external view revertsIfEmpty returns (SllNode memory) {
@@ -104,7 +111,7 @@ contract SllAsStructs {
 
   function getNthPtrFromHead(
     uint256 index
-  ) private view revertsIfEmpty returns (int256) {
+  ) internal view revertsIfEmpty returns (int256) {
     int256 targetPtr = getNthPtrFromNode(headPtr, index);
     return targetPtr;
   }
@@ -116,7 +123,7 @@ contract SllAsStructs {
     return heap[uint256(nthPtr)];
   }
 
-  function getNthPtrFromTail(uint256 index) private view returns (int256) {
+  function getNthPtrFromTail(uint256 index) internal view returns (int256) {
     uint256 nodeCount = getChainLength();
     uint256 targetIndex = nodeCount - index;
     return getNthPtrFromHead(targetIndex);

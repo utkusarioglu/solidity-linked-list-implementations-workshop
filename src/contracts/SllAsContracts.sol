@@ -26,13 +26,15 @@ contract SllAsContracts {
   function addNode(bytes32 data) external {
     SllNode newSllNode = new SllNode(data);
     bool headExists = isContract(address(head));
+
+    emit AddSllNode(newSllNode, data, !headExists);
+
     if (!headExists) {
       head = newSllNode;
     } else {
       SllNode tail = getTail();
       tail.setNext(newSllNode);
     }
-    emit AddSllNode(newSllNode, data, !headExists);
   }
 
   function getLength() public view returns (uint256) {
