@@ -20,7 +20,7 @@ contract SllAsStructs {
   // These two need to have the same value at start.
   // Normally headPtr would be assigned nullPtr but solidity
   int256 private constant nullPtr = -1;
-  int256 private headPtr = -1;
+  int256 public headPtr = -1;
 
   receive() external payable {
     revert NoPaymentRequired();
@@ -104,7 +104,7 @@ contract SllAsStructs {
 
   function getNthPtrFromHead(
     uint256 index
-  ) private view revertsIfEmpty returns (int256) {
+  ) internal view revertsIfEmpty returns (int256) {
     int256 targetPtr = getNthPtrFromNode(headPtr, index);
     return targetPtr;
   }
@@ -116,7 +116,7 @@ contract SllAsStructs {
     return heap[uint256(nthPtr)];
   }
 
-  function getNthPtrFromTail(uint256 index) private view returns (int256) {
+  function getNthPtrFromTail(uint256 index) internal view returns (int256) {
     uint256 nodeCount = getChainLength();
     uint256 targetIndex = nodeCount - index;
     return getNthPtrFromHead(targetIndex);

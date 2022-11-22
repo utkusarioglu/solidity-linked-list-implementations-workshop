@@ -194,6 +194,10 @@ describe(CONTRACT_NAME, () => {
       });
 
       describe("reverse", () => {
+        it("Can handle no-node state", async () => {
+          return expect(instance.reverse()).to.not.be.reverted;
+        });
+
         [1, 2, 3, 10].forEach((count) => {
           it(`Reverses ${count} nodes as expected`, async () => {
             const _nodes = await createNodes(instance, count);

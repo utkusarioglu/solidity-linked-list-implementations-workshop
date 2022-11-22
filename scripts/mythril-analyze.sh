@@ -6,6 +6,7 @@ scripts/solc-select-install.sh
 
 ANALYSIS_LOG_SUFFIX="mythril.log"
 TEMP_SOLC_JSON_PATH="/tmp/solc-settings.json"
+PREPROCESSED_CONTRACTS_PATH=/tmp/contracts
 
 current_date=$(get_current_date_string)
 sources_path=$(get_sources_path)

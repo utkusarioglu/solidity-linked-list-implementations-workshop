@@ -5,6 +5,7 @@ source ${0%/*}/analysis-common.sh
 scripts/solc-select-install.sh
 
 ANALYSIS_LOG_SUFFIX="slither.log"
+PREPROCESSED_CONTRACTS_PATH=/tmp/contracts
 
 current_date=$(get_current_date_string)
 sources_path=$(get_sources_path)
