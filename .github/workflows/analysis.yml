@@ -49,21 +49,3 @@ jobs:
       - values
     with:
       artifact_name: ${{ needs.values.outputs.artifact_name }}
-
-  # # notify:
-  # #   name: Analysis ended
-  # #   runs-on: ubuntu-latest
-  # #   needs:
-  # #     - echidna-analyze
-  # #     - mythril-analyze
-  # #     - slither-analyze
-  # #     - manticore-analyze
-  # #   steps:
-  # #     - name: Telegram notifications
-  # #       if: always()
-  # #       uses: utkusarioglu/telegram-notifications@main
-  # #       with:
-  # #         telegram_id: ${{ secrets.TELEGRAM_ID }}
-  # #         telegram_token: ${{ secrets.TELEGRAM_TOKEN }}
-  # #         job_status: ${{ job.status }}
-  # #         github_context: ${{ toJson(github) }}
