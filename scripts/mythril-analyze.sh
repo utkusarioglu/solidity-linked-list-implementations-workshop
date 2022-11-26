@@ -36,7 +36,7 @@ main() {
   for contract_name in $contract_names;
   do
     echo "Analyzing '$contract_name'…"
-    contract_path="$sources_path/$contract_name.sol"
+    contract_path="$PREPROCESSED_CONTRACTS_PATH/$contract_name.sol"
     analysis_log_filename="$contract_name-$current_date.$ANALYSIS_LOG_SUFFIX"
     analysis_log_path="$artifacts_folder/$analysis_log_filename"
 
