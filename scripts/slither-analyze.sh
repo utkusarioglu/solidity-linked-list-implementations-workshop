@@ -31,8 +31,14 @@ main() {
     source_contract_path="$PREPROCESSED_CONTRACTS_PATH/$contract_name.sol"
     analysis_log_filename="$contract_name-$current_date.$ANALYSIS_LOG_SUFFIX"
     analysis_log_path="$artifacts_folder/$analysis_log_filename"
+    analysis_json_log_path="$artifacts_folder/$analysis_log_filename.json"
 
-    slither "$source_contract_path" | tee "$analysis_log_path"
+    slither \
+      --show-ignored-findings \
+      --config-file ./slither.config.json \
+      --json $analysis_json_log_path \
+      "$source_contract_path" \
+      2>&1 | tee "$analysis_log_path"
 
     echo "Analysis log is available at '$analysis_log_path'"
     echo "Finished: '$contract_name'"

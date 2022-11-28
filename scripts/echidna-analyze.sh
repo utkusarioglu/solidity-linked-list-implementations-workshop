@@ -30,7 +30,8 @@ main() {
 
     if [ ! -f "$fuzz_contract_path" ];
     then
-      echo "$fuzz_contract_path is not available, skipping"
+      echo "$fuzz_contract_path is not available, skipping" \
+        | tee "$analysis_log_path"
       continue 
     fi
 

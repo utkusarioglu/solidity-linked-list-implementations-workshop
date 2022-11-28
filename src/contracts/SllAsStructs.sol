@@ -17,10 +17,8 @@ error Underflow();
 
 contract SllAsStructs {
   SllNode[] private heap;
-  // These two need to have the same value at start.
-  // Normally headPtr would be assigned nullPtr but solidity
-  int256 private constant nullPtr = -1;
-  int256 private headPtr = -1;
+  int256 private constant NULL_PTR = -1;
+  int256 private headPtr = -1; // = NULL_PTR
 
   receive() external payable {
     revert NoPaymentRequired();
@@ -31,7 +29,7 @@ contract SllAsStructs {
   }
 
   modifier revertsIfEmpty() {
-    if (headPtr == nullPtr) {
+    if (headPtr == NULL_PTR) {
       revert EmptyList();
     }
     _;
@@ -40,14 +38,14 @@ contract SllAsStructs {
   event AddNode(uint256 value);
 
   function addNode(uint256 value) external {
-    SllNode memory newNode = SllNode(value, nullPtr);
+    SllNode memory newNode = SllNode(value, NULL_PTR);
 
     emit AddNode(value);
     console.log("Add value", value);
 
     heap.push(newNode);
 
-    if (headPtr == nullPtr) {
+    if (headPtr == NULL_PTR) {
       headPtr = 0;
     } else {
       int256 tailPtr = getTailPtr();
@@ -59,7 +57,7 @@ contract SllAsStructs {
   function getChainLength() public view returns (uint256) {
     uint256 count = 0;
     int256 currentPtr = headPtr;
-    while (currentPtr != nullPtr) {
+    while (currentPtr != NULL_PTR) {
       count += 1;
       currentPtr = heap[uint256(currentPtr)].next;
     }
@@ -85,7 +83,7 @@ contract SllAsStructs {
   function getTailPtr() private view revertsIfEmpty returns (int256) {
     int256 currentPtr = headPtr;
     int256 tailPtr = currentPtr;
-    while (currentPtr != nullPtr) {
+    while (currentPtr != NULL_PTR) {
       tailPtr = currentPtr;
       currentPtr = heap[uint256(currentPtr)].next;
     }
@@ -138,8 +136,8 @@ contract SllAsStructs {
 
   function reverse() external {
     int256 currentPtr = headPtr;
-    int256 prevPtr = nullPtr;
-    while (currentPtr != nullPtr) {
+    int256 prevPtr = NULL_PTR;
+    while (currentPtr != NULL_PTR) {
       SllNode storage currentNode = heap[uint256(currentPtr)];
       int256 nextPtr = currentNode.next;
       currentNode.next = prevPtr;
@@ -152,7 +150,7 @@ contract SllAsStructs {
   function reverseRecursiveStep(int256 currentPtr) private returns (int256) {
     SllNode storage current = heap[uint256(currentPtr)];
     int256 oldNext = current.next;
-    if (oldNext == nullPtr) {
+    if (oldNext == NULL_PTR) {
       headPtr = currentPtr;
     } else {
       current.next = reverseRecursiveStep(oldNext);
@@ -161,7 +159,7 @@ contract SllAsStructs {
   }
 
   function reverseRecursive() external {
-    if (headPtr == nullPtr) {
+    if (headPtr == NULL_PTR) {
       revert EmptyList();
     }
     reverseRecursiveStep(headPtr);
